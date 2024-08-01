@@ -163,15 +163,21 @@ class GestionProductos:
         except Exception as error:
             print(f'Error inesperado: {error}')
     
-
     #Para crear producto
     def crear_producto(self, producto):
-        datos = self.leer_datos()
-        codigo_producto = Producto.codigo_producto
-        if not str(codigo_producto) in datos.keys():
-            datos[codigo_producto] = Producto.to_dict()
-            self.guardar_datos(datos)
-            print(f"Se agregó el producto {Producto.producto} {Producto.codigo_producto} a la base de datos.")
+        try:
+            datos = self.leer_datos()
+            codigo_producto = Producto.codigo_producto
+            if not str(codigo_producto) in datos.keys():
+                datos[codigo_producto] = Producto.to_dict()
+                self.guardar_datos(datos)
+                print(f"Se agregó el producto {Producto.producto} {Producto.codigo_producto} a la base de datos.")
+            else:
+                print(f"El código del producto ingresado, ya existe en la base de datos '{codigo_producto}'.")
+        except Exception as error:
+            print(f'Error inesperado al crear producto: {error}')
+    
+    
 
 
     

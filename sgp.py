@@ -4,18 +4,18 @@ Objetivo: Desarrollar un sistema para manejar productos en un inventario.
 
 Requisitos:
 
-Crear una clase base Producto con atributos como nombre, precio, cantidad en stock, etc.
+Crear una clase base Producto con atributos como producto, precio, cantidad en stock, etc.
 Definir al menos 2 clases derivadas para diferentes categorías de productos (por ejemplo, ProductoElectronico, ProductoAlimenticio) con atributos
 y métodos específicos.
 Implementar operaciones CRUD para gestionar productos del inventario.
 Manejar errores con bloques try-except para validar entradas y gestionar excepciones.
 Persistir los datos en archivo JSON.'''
 
-
+import json
 class Producto:
-    def __init__(self, codigo_producto, nombre, precio, cantidad_stock):
+    def __init__(self, codigo_producto, producto, precio, cantidad_stock):
         self.__codigo_producto = self.validar_codigo_producto(codigo_producto)
-        self.__nombre = nombre
+        self.__producto = producto
         self.__precio = precio
         self.__cantidad_stock = self.validar_cantidad_stock(cantidad_stock)
             
@@ -24,8 +24,8 @@ class Producto:
         return self.__codigo_producto
 
     @property
-    def nombre(self):
-        return self.__nombre.capitalize()
+    def producto(self):
+        return self.__producto.capitalize()
 
     @property
     def precio(self):
@@ -43,13 +43,13 @@ class Producto:
     def to_dict(self):
         return {
             "codigo_producto": self.codigo_producto,
-            "nombre": self.nombre,
+            "producto": self.producto,
             "precio": self.precio,
             "cantidad_stock": self.cantidad_stock,
         }
     
     def __str__(self):
-        return f"{self.nombre} {self.codigo_producto}"
+        return f"{self.producto} {self.codigo_producto}"
    
 # Para ISBN-13: Multiplica alternativamente cada dígito por 1 y 3, comenzando por el primer dígito.Suma todos los resultados.
 # Divide la suma por 10. El dígito de control es el número que debes añadir a la suma para que sea un múltiplo de 10.
@@ -76,8 +76,8 @@ class Producto:
 
 
 class ProductoElectronico(Producto):
-    def __init__(self, codigo_producto, nombre, precio, cantidad_stock, marca, modelo):
-        super().__init__(codigo_producto, nombre, precio, cantidad_stock)
+    def __init__(self, codigo_producto, producto, precio, cantidad_stock, marca, modelo):
+        super().__init__(codigo_producto, producto, precio, cantidad_stock)
         #Mapeo los atributos que agrego ala subclase
         self.__marca = marca
         self.__modelo = modelo
@@ -107,8 +107,8 @@ class ProductoElectronico(Producto):
         return f"{super().__str__()} - modelo: {self.modelo}"
 
 class ProductoAlimenticio(Producto):
-    def __init__(self, codigo_producto, nombre, precio, cantidad_stock, marca, peso):
-        super().__init__(codigo_producto, nombre, precio, cantidad_stock)
+    def __init__(self, codigo_producto, producto, precio, cantidad_stock, marca, peso):
+        super().__init__(codigo_producto, producto, precio, cantidad_stock)
         #Mapeo los atributos que agrego ala subclase
         self.__marca = marca
         self.__modelo = peso
@@ -137,5 +137,43 @@ class ProductoAlimenticio(Producto):
     def __str__(self):
         return f"{super().__str__()} - peso: {self.peso}"
 
-   
+class GestionProductos:
+    def __init__(self, archivo):
+        self.archivo = archivo
+    #Traigo los datos para leerlos
+    def leer_datos(self):
+        try:
+            with open(self.archivo, 'r') as file:
+                datos = json.load(file)
+        except FileNotFoundError:
+            return {}
+        except Exception as error:
+            raise Exception(f'Error al leer datos del {self.archivo}: {error}')
+        #Si sale todo bien, retorna los datos
+        else:
+            return datos
+    
+    #Para guardar
+    def guardar_datos(self, datos):
+        try:
+            with open(self.archivo, 'w') as file:
+                json.dump(datos, file, indent=4) #Son los espacios dentro del json ára facilitar su lectura: 4 es el más utilizado
+        except IOError as error:
+            print(f'Error al intentar guardar los datos en {self.archivo}: {error}')
+        except Exception as error:
+            print(f'Error inesperado: {error}')
+    
+
+    #Para crear producto
+    def crear_producto(self, producto):
+        datos = self.leer_datos()
+        codigo_producto = Producto.codigo_producto
+        if not str(codigo_producto) in datos.keys():
+            datos[codigo_producto] = Producto.to_dict()
+            self.guardar_datos(datos)
+            print(f"Se agregó el producto {Producto.producto} {Producto.codigo_producto} a la base de datos.")
+
+
+    
+    
 

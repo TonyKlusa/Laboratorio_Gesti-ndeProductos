@@ -150,6 +150,7 @@ class GestionProductos:
         except Exception as error:
             print(f'Error inesperado: {error}')
     
+   
     #Para crear producto
     def crear_producto(self, producto):
         try:
@@ -165,6 +166,23 @@ class GestionProductos:
                 print(f"El código del producto ingresado ya existe en la base de datos y está relacionado con el producto '{producto_existente}'.")
         except Exception as error:
             print(f'Error inesperado al crear producto: {error}')
+    
+    #Para leer producto
+    def leer_producto(self, codigo_producto):
+        try:
+            datos = self.leer_datos()
+            if codigo_producto in datos:
+                producto_data = datos[codigo_producto]
+                if 'modelo' in producto_data:
+                    producto = ProductoElectronico(**producto_data)
+                else:
+                    producto = ProductoAlimenticio(**producto_data)
+                print(f'Producto encontrado con codigo de producto {codigo_producto}')
+            else:
+                print(f'No se encontró encontrado con codigo de producto {codigo_producto}')
+
+        except Exception as e:
+            print('Error al leer producto: {e}')
     
 
 

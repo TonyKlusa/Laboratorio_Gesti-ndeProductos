@@ -38,5 +38,13 @@
         "cantidad_stock": 12.0,
         "marca": "12",
         "modelo": "12"
+    },
+    "1245879876542": {
+        "codigo_producto": 1245879876542,
+        "producto": "345",
+        "precio": 3546.0,
+        "cantidad_stock": 3456.0,
+        "marca": "356",
+        "modelo": "3456"
     }
 }

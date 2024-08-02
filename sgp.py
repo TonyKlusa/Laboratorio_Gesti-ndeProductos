@@ -13,11 +13,12 @@ Persistir los datos en archivo JSON.'''
 
 import json
 class Producto:
-    def __init__(self, codigo_producto, producto, precio, cantidad_stock):
+    def __init__(self, codigo_producto, producto, precio, cantidad_stock, marca):
         self.__codigo_producto = self.validar_codigo_producto(codigo_producto)
         self.__producto = producto
         self.__precio = precio
         self.__cantidad_stock = self.validar_cantidad_stock(cantidad_stock)
+        self.__marca = marca
             
     @property
     def codigo_producto(self):
@@ -34,6 +35,10 @@ class Producto:
     @property
     def cantidad_stock(self):
         return self.__cantidad_stock
+
+    @property
+    def marca(self):
+        return self.__marca
     
     @cantidad_stock.setter
     def cantidad_stock(self, nuevo_stock):
@@ -46,23 +51,22 @@ class Producto:
             "producto": self.producto,
             "precio": self.precio,
             "cantidad_stock": self.cantidad_stock,
+            "marca": self.marca
         }
     
     def __str__(self):
         return f"{self.producto} {self.codigo_producto}"
-   
-# Para ISBN-13: Multiplica alternativamente cada dígito por 1 y 3, comenzando por el primer dígito.Suma todos los resultados.
-# Divide la suma por 10. El dígito de control es el número que debes añadir a la suma para que sea un múltiplo de 10.
-# Si la suma ya es múltiplo de 10, el dígito de control es 0. Sería interesante calcularlo para revisar.Si tengo tiempo lo hago
-
+    
     def validar_codigo_producto(self, codigo_producto):
         try:
             codigo_producto_num = int(codigo_producto)
-            if len(str(codigo_producto)) != [13]:
+            if len(str(codigo_producto)) == 13:
+                return codigo_producto_num
+            else:
                 raise ValueError("El código del producto debe tener 13 dígitos. ")
         except ValueError:
             raise ValueError("El código del producto debe ser un número y estar compuesto por 13 dígitos.")
-    
+
     def validar_cantidad_stock(self, cantidad_stock):
         try:
             cantidad_stock_num = float(cantidad_stock)
@@ -77,14 +81,10 @@ class Producto:
 
 class ProductoElectronico(Producto):
     def __init__(self, codigo_producto, producto, precio, cantidad_stock, marca, modelo):
-        super().__init__(codigo_producto, producto, precio, cantidad_stock)
+        super().__init__(codigo_producto, producto, precio, cantidad_stock, marca)
         #Mapeo los atributos que agrego ala subclase
-        self.__marca = marca
         self.__modelo = modelo
 
-    @property
-    def marca(self):
-        return self.__marca
 #Ej. de polimorfismo.El mismo metodo, según de donde lo ejecutemos responde de una manera u otra.
     def to_dict(self):
         data = super().to_dict()
@@ -108,26 +108,13 @@ class ProductoElectronico(Producto):
 
 class ProductoAlimenticio(Producto):
     def __init__(self, codigo_producto, producto, precio, cantidad_stock, marca, peso):
-        super().__init__(codigo_producto, producto, precio, cantidad_stock)
+        super().__init__(codigo_producto, producto, precio, cantidad_stock, marca)
         #Mapeo los atributos que agrego ala subclase
-        self.__marca = marca
-        self.__modelo = peso
+        self.__peso = peso
 
-    @property
-    def marca(self):
-        return self.__marca
-
-    def to_dict(self):
-        data = super().to_dict()
-        data["marca"] = self.marca
-        return data
-
-    def __str__(self):
-        return f"{super().__str__()} - marca: {self.marca}"
-    
     @property
     def peso(self):
-        return self.peso
+        return self.__peso
 
     def to_dict(self):
         data = super().to_dict()
@@ -167,17 +154,19 @@ class GestionProductos:
     def crear_producto(self, producto):
         try:
             datos = self.leer_datos()
-            codigo_producto = Producto.codigo_producto
+            codigo_producto = producto.codigo_producto
             if not str(codigo_producto) in datos.keys():
-                datos[codigo_producto] = Producto.to_dict()
+                datos[codigo_producto] = producto.to_dict()
                 self.guardar_datos(datos)
-                print(f"Se agregó el producto {Producto.producto} {Producto.codigo_producto} a la base de datos.")
+                print(f"Se agregó el producto {producto.producto} a la base de datos.")
             else:
-                print(f"El código del producto ingresado, ya existe en la base de datos '{codigo_producto}'.")
+                # Si el producto ya existe, quero qu eme diga que producto es, para saber si ya esta cargado. 
+                producto_existente = datos[str(codigo_producto)]["producto"]
+                print(f"El código del producto ingresado ya existe en la base de datos y está relacionado con el producto '{producto_existente}'.")
         except Exception as error:
             print(f'Error inesperado al crear producto: {error}')
     
-    
+
 
 
     

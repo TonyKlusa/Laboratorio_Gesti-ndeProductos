@@ -21,7 +21,7 @@ def mostrar_menu():
     print("2: Agregar un producto alimenticio")
     print("3: Buscar producto por código")
     print('4. Actualizar stock del producto')
-    print('5. Eliminarar producto por código')
+    print('5. Eliminar producto por código')
     print('6. Mostrar todos los productos')
     print('7. Salir')
     print('======================================================')
@@ -54,9 +54,10 @@ def agregar_producto(gestion, tipo_producto):
 
     except ValueError as e:
         print(f'Error:{e}')
+        input('Presione enter para continuar...')    
     except Exception as e:
         print(f'Error inesperado')
-
+        input('Presione enter para continuar...')
 
 def buscar_producto_por_codigo(gestion):
     codigo_producto = input('Ingrese el código del producto buscar: ')
@@ -75,8 +76,15 @@ def eliminar_producto_por_codigo(gestion):
     input('Presione enter para continuar...')
 
 def mostrar_todos_los_productos(gestion):
-    pass
-
+    print('=========== Listado completo de los productos ==========')
+    #print('Código       / Producto  /     Stock                    ')
+    for producto in gestion.leer_datos().values():
+        if 'modelo' in producto:
+            print(f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - modelo {producto['modelo']}")
+        else:
+            print(f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - peso {producto['peso']}")
+    print('========================================================')
+    input('Presione enter para continuar...')
 
 if __name__ == "__main__":
     archivo_productos='productos_db.json'

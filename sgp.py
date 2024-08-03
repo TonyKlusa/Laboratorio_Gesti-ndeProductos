@@ -201,11 +201,10 @@ class GestionProductos:
         try:
             datos = self.leer_datos()
             if str(codigo_producto) in datos.keys():
+                 nombre_producto = datos[codigo_producto]['producto']
                  del datos[codigo_producto]
                  self.guardar_datos(datos)
-                 #nombre_producto = datos[codigo_producto]['producto']
-                 #print(f'Base de datos actualizada. Se ha eliminado el producto {nombre_producto} con código {codigo_producto}')
-                 print(f'Base de datos actualizada. Se ha eliminado el producto con código {codigo_producto}')
+                 print(f'Base de datos actualizada. Se ha eliminado el producto {nombre_producto} con código {codigo_producto}')
             else:
                 print(f'No se encontró producto con codigo:{codigo_producto} ')
         except Exception as e:

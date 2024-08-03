@@ -1,12 +1,4 @@
 {
-    "1234569874125": {
-        "codigo_producto": 1234569874125,
-        "producto": "De",
-        "precio": 12.0,
-        "cantidad_stock": 12.0,
-        "marca": "dell",
-        "modelo": "dertgf"
-    },
     "1234569874587": {
         "codigo_producto": 1234569874587,
         "producto": "12",
@@ -22,5 +14,13 @@
         "cantidad_stock": 3456.0,
         "marca": "356",
         "modelo": "3456"
+    },
+    "1233456789658": {
+        "codigo_producto": 1233456789658,
+        "producto": "Compurtadora",
+        "precio": 12345.0,
+        "cantidad_stock": 10.0,
+        "marca": "dell",
+        "modelo": "atom"
     }
 }

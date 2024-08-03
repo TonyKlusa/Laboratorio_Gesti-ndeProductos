@@ -70,12 +70,13 @@ def actualizar_stock_producto(gestion):
     input('Presione enter para continuar...')
 
 def eliminar_producto_por_codigo(gestion):
-    codigo_producto = input('Ingrese el código del producto a modificar stock: ')
+    codigo_producto = input('Ingrese el código del producto a eliminar stock: ')
     gestion.eliminar_producto(codigo_producto)
     input('Presione enter para continuar...')
 
 def mostrar_todos_los_productos(gestion):
     pass
+
 
 if __name__ == "__main__":
     archivo_productos='productos_db.json'

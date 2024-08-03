@@ -188,7 +188,7 @@ class GestionProductos:
         try:
             datos = self.leer_datos()
             if str(codigo_producto) in datos.keys():
-                 datos[codigo_producto]['cantidad_stock'] = actualiza_cantidad_stock
+                 datos[codigo_producto]['cantidad_stock'] = actualiza_cantidad_stock #deberia hacer validaciones aca tbn?
                  self.guardar_datos(datos)
                  nombre_producto = datos[codigo_producto]['producto']
                  print(f'Stock actualizado para el producto {nombre_producto} con código {codigo_producto}')
@@ -198,7 +198,18 @@ class GestionProductos:
             print(f'Error al actualizar el producto: {e}')
 
     def eliminar_producto(self, codigo_producto):
-        pass
+        try:
+            datos = self.leer_datos()
+            if str(codigo_producto) in datos.keys():
+                 del datos[codigo_producto]
+                 self.guardar_datos(datos)
+                 #nombre_producto = datos[codigo_producto]['producto']
+                 #print(f'Base de datos actualizada. Se ha eliminado el producto {nombre_producto} con código {codigo_producto}')
+                 print(f'Base de datos actualizada. Se ha eliminado el producto con código {codigo_producto}')
+            else:
+                print(f'No se encontró producto con codigo:{codigo_producto} ')
+        except Exception as e:
+            print(f'Error al eliminar el producto: {e}')
     
 
 

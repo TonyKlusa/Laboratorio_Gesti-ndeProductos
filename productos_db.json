@@ -1,28 +1,4 @@
 {
-    "1236547896548": {
-        "codigo_producto": 1236547896548,
-        "producto": "Pc",
-        "precio": 12.0,
-        "cantidad_stock": 9100,
-        "marca": "dell",
-        "modelo": "atom"
-    },
-    "1478523698547": {
-        "codigo_producto": 1478523698547,
-        "producto": "Pk",
-        "precio": 12.0,
-        "cantidad_stock": 12.0,
-        "marca": "dell",
-        "modelo": "atom2"
-    },
-    "1236547896587": {
-        "codigo_producto": 1236547896587,
-        "producto": "Computadora",
-        "precio": 123.0,
-        "cantidad_stock": 12.0,
-        "marca": "dell",
-        "modelo": "atom"
-    },
     "1234569874125": {
         "codigo_producto": 1234569874125,
         "producto": "De",
@@ -35,7 +11,7 @@
         "codigo_producto": 1234569874587,
         "producto": "12",
         "precio": 12.0,
-        "cantidad_stock": 12.0,
+        "cantidad_stock": 1,
         "marca": "12",
         "modelo": "12"
     },

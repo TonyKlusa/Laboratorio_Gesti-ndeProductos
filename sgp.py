@@ -174,16 +174,23 @@ class GestionProductos:
             if codigo_producto in datos:
                 producto_data = datos[codigo_producto]
                 if 'modelo' in producto_data:
-                    producto = ProductoElectronico(**producto_data)
+                    return ProductoElectronico(**producto_data)
                 else:
-                    producto = ProductoAlimenticio(**producto_data)
-                print(f'Producto encontrado con codigo de producto {codigo_producto}')
+                    return ProductoAlimenticio(**producto_data)
             else:
-                print(f'No se encontró encontrado con codigo de producto {codigo_producto}')
+                return None  # No se encontró el producto
 
         except Exception as e:
-            print('Error al leer producto: {e}')
-
+            print(f'Error al leer producto: {e}')
+            return None
+    
+    def buscar_producto_por_codigo(self, codigo_producto):
+        producto = self.leer_producto(codigo_producto)
+        if producto:
+            print(f'Producto encontrado: {producto}')
+        else:
+            print(f'No se encontró producto con código {codigo_producto}')
+    
     def actualizar_producto(self, codigo_producto, actualiza_cantidad_stock):
         try:
             datos = self.leer_datos()

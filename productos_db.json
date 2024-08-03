@@ -22,5 +22,30 @@
         "cantidad_stock": 10.0,
         "marca": "dell",
         "modelo": "atom"
+    },
+    "1233456789659": {
+        "codigo_producto": 1233456789659,
+        "producto": "Laptop",
+        "precio": 12345.0,
+        "cantidad_stock": 10.0,
+        "marca": "dell",
+        "modelo": "atom"
+    },
+    "1233456789669": {
+        "codigo_producto": 1233456789669,
+        "producto": "Laptop",
+        "precio": 12345.0,
+        "cantidad_stock": 10.0,
+        "marca": "Toshiba",
+        "modelo": "atom"
+    },
+    "1233456789612": {
+        "codigo_producto": 1233456789612,
+        "producto": "Laptop",
+        "precio": 12345.0,
+        "cantidad_stock": 10.0,
+        "marca": "ASUS",
+        "modelo": "atom"
     }
+    
 }

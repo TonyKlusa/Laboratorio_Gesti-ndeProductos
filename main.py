@@ -1,6 +1,6 @@
 import os
 import platform
-import time
+from datetime import datetime
 
 from sgp import (
     ProductoAlimenticio,
@@ -32,36 +32,43 @@ def mostrar_menu():
 def agregar_producto(gestion, tipo_producto):
     try:
         codigo_producto = input('Ingrese código del producto: ')
-        producto = input('Ingrese el producto: ')
-        precio = float(input(f'Ingrese el precio de {producto} : '))
-        cantidad_stock = int(input(f'Ingrese el stock de {producto} : '))
-        marca = input(f'Ingrese la marca del {producto} : ')
-        #modelo = input(f'Ingrese el modelo del {producto} : ')
-        #peso = input(f'Ingrese el peso del {producto} : ')  
+
+        # Verificar si el código ya existe
+        if gestion.leer_producto(codigo_producto):
+            print(f'Error: El código {codigo_producto} ya existe. Intente con otro código.')
+            input('Presione enter para continuar...')
+            return  # Terminar la función si el código ya existe
+        
+        # Continuar con la creación del producto solo si el código no existe
+        nombre_producto = input('Ingrese el nombre del producto: ')
+        precio = float(input(f'Ingrese el precio de {nombre_producto}: '))
+        cantidad_stock = int(input(f'Ingrese el stock de {nombre_producto}: '))
+        marca = input(f'Ingrese la marca del {nombre_producto}: ')
 
         if tipo_producto == '1':
-            modelo = input(f'Ingrese el modelo del {producto} : ')
-            producto= ProductoElectronico(codigo_producto, producto, precio, cantidad_stock, marca, modelo)
+            modelo = input(f'Ingrese el modelo del {nombre_producto}: ')
+            producto = ProductoElectronico(codigo_producto, nombre_producto, precio, cantidad_stock, marca, modelo)
         elif tipo_producto == '2':
-            peso = int(input(f'Ingrese el peso del {producto} : ')) 
-            producto= ProductoAlimenticio(codigo_producto, producto, precio, cantidad_stock, marca, peso)
+            peso = int(input(f'Ingrese el peso del {nombre_producto}: '))
+            producto = ProductoAlimenticio(codigo_producto, nombre_producto, precio, cantidad_stock, marca, peso)
         else:
             print('Opción inválida')
             return
         
         gestion.crear_producto(producto)
+        print('Producto agregado exitosamente.')
         input('Presione enter para continuar...')
 
     except ValueError as e:
-        print(f'Error:{e}')
-        input('Presione enter para continuar...')    
+        print(f'Error: {e}')
+        input('Presione enter para continuar...')
     except Exception as e:
-        print(f'Error inesperado')
+        print(f'Error inesperado: {e}')
         input('Presione enter para continuar...')
 
 def buscar_producto_por_codigo(gestion):
     codigo_producto = input('Ingrese el código del producto buscar: ')
-    gestion.leer_producto(codigo_producto)
+    gestion.buscar_producto_por_codigo(codigo_producto)
     input('Presione enter para continuar...')
 
 def actualizar_stock_producto(gestion):
@@ -76,14 +83,33 @@ def eliminar_producto_por_codigo(gestion):
     input('Presione enter para continuar...')
 
 def mostrar_todos_los_productos(gestion):
+    limpiar_pantalla()
     print('=========== Listado completo de los productos ==========')
-    #print('Código       / Producto  /     Stock                    ')
+    
+    productos = []
     for producto in gestion.leer_datos().values():
         if 'modelo' in producto:
-            print(f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - modelo {producto['modelo']}")
+            producto_str = f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - modelo {producto['modelo']}"
         else:
-            print(f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - peso {producto['peso']}")
+            producto_str = f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - peso {producto['peso']}"
+        print(producto_str)
+        productos.append(producto_str)
+        
     print('========================================================')
+    
+    opcion_guardar = input('¿Desea guardar los productos en un archivo de texto? (s/n): ').lower()
+    if opcion_guardar == 's':
+        # Generar nombre del archivo con fecha y hora
+        fecha_hora_actual = datetime.now().strftime('%Y%m%d-%H%M')
+        nombre_archivo = f"{fecha_hora_actual}_listado_de_productos.txt"
+        
+        with open(nombre_archivo, 'w') as archivo_txt:
+            archivo_txt.write('=========== Listado completo de los productos ==========\n')
+            archivo_txt.write('\n'.join(productos))
+            archivo_txt.write('\n========================================================\n')
+        
+        print(f'Productos guardados en {nombre_archivo}')
+    
     input('Presione enter para continuar...')
 
 if __name__ == "__main__":

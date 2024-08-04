@@ -33,13 +33,13 @@ def agregar_producto(gestion, tipo_producto):
     try:
         codigo_producto = input('Ingrese código del producto: ')
 
-        # Verificar si el código ya existe
+        # Pra evitar cargar todos los datos, quier primero verificar el codigo del producto
         if gestion.leer_producto(codigo_producto):
             print(f'Error: El código {codigo_producto} ya existe. Intente con otro código.')
             input('Presione enter para continuar...')
-            return  # Terminar la función si el código ya existe
+            return  
         
-        # Continuar con la creación del producto solo si el código no existe
+        # si el código no existe sigue por aca
         nombre_producto = input('Ingrese el nombre del producto: ')
         precio = float(input(f'Ingrese el precio de {nombre_producto}: '))
         cantidad_stock = int(input(f'Ingrese el stock de {nombre_producto}: '))
@@ -85,16 +85,26 @@ def eliminar_producto_por_codigo(gestion):
 def mostrar_todos_los_productos(gestion):
     limpiar_pantalla()
     print('=========== Listado completo de los productos ==========')
-    
-    productos = []
+
+    productos_electronicos = []
+    productos_alimenticios = []
+
     for producto in gestion.leer_datos().values():
         if 'modelo' in producto:
             producto_str = f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - modelo {producto['modelo']}"
+            productos_electronicos.append(producto_str)
         else:
             producto_str = f"{producto['codigo_producto']} - {producto['producto']} - Stock {producto['cantidad_stock']} - peso {producto['peso']}"
-        print(producto_str)
-        productos.append(producto_str)
-        
+            productos_alimenticios.append(producto_str)
+
+    # Imprimir productos con modelo
+    print('Productos Electrónicos:')
+    print('\n'.join(productos_electronicos))
+    print('========================================================')
+
+    # Imprimir productos sin modelo
+    print('Productos Alimenticios:')
+    print('\n'.join(productos_alimenticios))
     print('========================================================')
     
     opcion_guardar = input('¿Desea guardar los productos en un archivo de texto? (s/n): ').lower()
@@ -105,8 +115,13 @@ def mostrar_todos_los_productos(gestion):
         
         with open(nombre_archivo, 'w') as archivo_txt:
             archivo_txt.write('=========== Listado completo de los productos ==========\n')
-            archivo_txt.write('\n'.join(productos))
+            archivo_txt.write('=========== Productos electronicos =========== ==========\n')
+            archivo_txt.write('\n'.join(productos_electronicos))
             archivo_txt.write('\n========================================================\n')
+            archivo_txt.write('=========== Productos alimenticios =======================\n')
+            archivo_txt.write('\n'.join(productos_alimenticios))
+            archivo_txt.write('\n========================================================\n')
+
         
         print(f'Productos guardados en {nombre_archivo}')
     

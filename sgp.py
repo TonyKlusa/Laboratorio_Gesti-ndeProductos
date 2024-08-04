@@ -60,12 +60,12 @@ class Producto:
     def validar_codigo_producto(self, codigo_producto):
         try:
             codigo_producto_num = int(codigo_producto)
-            if len(str(codigo_producto)) == 13:
+            if len(str(codigo_producto)) == 6:
                 return codigo_producto_num
             else:
-                raise ValueError("El código del producto debe tener 13 dígitos. ")
+                raise ValueError("El código del producto debe tener 6 dígitos. ")
         except ValueError:
-            raise ValueError("El código del producto debe ser un número y estar compuesto por 13 dígitos.")
+            raise ValueError("El código del producto debe ser un número y estar compuesto por 6 dígitos.")
 
     def validar_cantidad_stock(self, cantidad_stock):
         try:

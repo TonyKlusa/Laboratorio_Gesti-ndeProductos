@@ -187,42 +187,49 @@ class GestionProductos:
     #Para crear producto
     def crear_producto(self, producto):
         try:
+            # Verificar si el producto ya existe
+            producto_existente = self.buscar_producto(producto.codigo_producto)
+            if producto_existente:
+                print(f'Error: Ya existe un producto con el código {producto.codigo_producto}.')
+                return
+
             connection = self.connect()
             if connection:
                 with connection.cursor() as cursor:
-                    # Verificar si el codigo ya existe
-                    cursor.execute('SELECT codigo_producto FROM productos WHERE codigo_producto = %s', (producto.codigo_producto,))
-                    if cursor.fetchone():
-                        print(f'Error: Ya existe un producto con producto con ')
-                        return
-                    
+                    # Insertar producto en la tabla productos
+                    query_producto = '''
+                        INSERT INTO productos (codigo_producto, producto, precio, cantidad_stock, marca)
+                        VALUES (%s, %s, %s, %s, %s)
+                    '''
+                    cursor.execute(query_producto, (producto.codigo_producto, producto.producto, producto.precio, producto.cantidad_stock, producto.marca))
+
                     # Insertar producto dependiendo del tipo
                     if isinstance(producto, ProductoAlimenticio):
-                        query = '''
-                        INSERT INTO Productos (codigo_producto, producto, cantidad_stock, precio, marca)
-                        VALUES (%s, %s, %s, %s, %s)
+                        query_alimenticio = '''
+                            INSERT INTO productosalimenticios (codigo_producto, peso)
+                            VALUES (%s, %s)
                         '''
-                        cursor.execute(query, (producto.codigo_producto, producto.producto, producto.cantidad_stock, producto.precio, producto.marca))
-                        query = '''
-                        INSERT INTO productosalimenticios (codigo_producto, peso)
-                        VALUES (%s, %s)
-                        '''
-                        cursor.execute(query, (producto.codigo_producto, producto.peso))
+                        cursor.execute(query_alimenticio, (producto.codigo_producto, producto.peso))
                     elif isinstance(producto, ProductoElectronico):
-                        query = '''
-                        INSERT INTO productos (codigo_producto, producto, cantidad_stock, precio, marca)
-                        VALUES (%s, %s, %s, %s, %s)
+                        query_electronico = '''
+                            INSERT INTO productoselectronicos (codigo_producto, modelo)
+                            VALUES (%s, %s)
                         '''
-                        cursor.execute(query, (producto.codigo_producto, producto.producto, producto.cantidad_stock, producto.precio, producto.marca))
-                        query = '''
-                        INSERT INTO productoselectronicos (codigo_producto, modelo)
-                        VALUES (%s, %s)
-                        '''
-                        cursor.execute(query, (producto.codigo_producto, producto.modelo))
+                        cursor.execute(query_electronico, (producto.codigo_producto, producto.modelo))
+                    else:
+                        print('Error: Tipo de producto no válido.')
+                        return
+                    
                     connection.commit()
                     print(f'Producto {producto.producto} creado correctamente')
         except Exception as error:
             print(f'Error inesperado al crear producto: {error}')
+        finally:
+            if connection and connection.is_connected():
+                connection.close()
+                print("La conexión MySQL ha sido cerrada.")
+
+
 
     
     def actualizar_producto(self, codigo_producto, actualiza_cantidad_stock):
@@ -278,15 +285,16 @@ class GestionProductos:
     
 
 
-    def leer_datos(self):
+    def leer_datos(self, codigo_producto):
         try:
             connection = self.connect()
             if connection:
                 with connection.cursor() as cursor:
                     # Verificar si el codigo ya existe
-                    cursor.execute('SELECT codigo_producto FROM productos WHERE codigo_producto = %s', (producto.codigo_producto,))
+                    cursor.execute('SELECT producto FROM productos WHERE codigo_producto = %s', (codigo_producto,))
                     if cursor.fetchone():
                         print(f' Datos leidos con éxito. Producto {producto.producto} encontrado')
+                        input('Presione enter para continuar...')
                         return
            
         except Exception as error:
@@ -316,14 +324,14 @@ class GestionProductos:
                     # Buscar el producto por su código
                     cursor.execute('SELECT producto, cantidad_stock FROM productos WHERE codigo_producto = %s', (codigo_producto,))
                     producto = cursor.fetchone()
-
-                    if producto:
-                        print(f'Producto: {producto[0]} con stock: {producto[1]}')
-                    else:
-                        print(f'No se encontró producto con código: {codigo_producto}')
-
+                    return producto
         except Exception as error:
-            print(f'Error inesperado al buscar producto: {error}')
+            print(f'Error al buscar producto: {error}')
+            return None
+        finally:
+            if connection and connection.is_connected():
+                connection.close()
+
 
     
     

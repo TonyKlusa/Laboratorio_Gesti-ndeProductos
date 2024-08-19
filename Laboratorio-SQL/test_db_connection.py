@@ -29,5 +29,7 @@ def conectar_bd():
             connection.close()
             print("La conexión MySQL ha sido cerrada.")
 
+
+
 if __name__ == "__main__":
     conectar_bd()

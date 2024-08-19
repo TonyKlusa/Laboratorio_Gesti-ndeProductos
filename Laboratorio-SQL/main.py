@@ -62,9 +62,22 @@ def agregar_producto(gestion, tipo_producto):
         input('Presione enter para continuar...')
 
 def buscar_producto_por_codigo(gestion):
-    codigo_producto = input('Ingrese el código del producto buscar: ')
-    gestion.buscar_producto(codigo_producto)
+    codigo_producto = input('Ingrese el código del producto a buscar: ')
+    
+    # Puedo usar la funcion buscar y aca despliego los detalles
+    producto = gestion.buscar_producto(codigo_producto)
+    
+    if producto:
+        # ver  valores del producto y mostrarlos
+        nombre_producto, cantidad_stock = producto
+        print(f'Datos del producto encontrado:\n'
+              f'Nombre del Producto: {nombre_producto}\n'
+              f'Cantidad en Stock: {cantidad_stock}')
+    else:
+        print(f'No se encontró ningún producto con el código {codigo_producto}.')
+    
     input('Presione enter para continuar...')
+
 
 def actualizar_stock_producto(gestion):
     codigo_producto = input('Ingrese el código del producto a modificar stock: ')

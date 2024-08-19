@@ -1,0 +1,162 @@
+{
+    "123456": {
+        "codigo_producto": 123456,
+        "producto": "Laptop",
+        "precio": 1500.0,
+        "cantidad_stock": 50,
+        "marca": "HP",
+        "modelo": "Pavilion"
+    },
+    "123457": {
+        "codigo_producto": 123457,
+        "producto": "Smartphone",
+        "precio": 800.0,
+        "cantidad_stock": 100,
+        "marca": "Samsung",
+        "modelo": "Galaxy S21"
+    },
+    "123458": {
+        "codigo_producto": 123458,
+        "producto": "Tablet",
+        "precio": 300.0,
+        "cantidad_stock": 70,
+        "marca": "Apple",
+        "modelo": "iPad Air"
+    },
+    "123459": {
+        "codigo_producto": 123459,
+        "producto": "Televisor",
+        "precio": 1200.0,
+        "cantidad_stock": 20,
+        "marca": "LG",
+        "modelo": "OLED55"
+    },
+    "123460": {
+        "codigo_producto": 123460,
+        "producto": "Consola de Videojuegos",
+        "precio": 500.0,
+        "cantidad_stock": 35,
+        "marca": "Sony",
+        "modelo": "PlayStation 5"
+    },
+    "123461": {
+        "codigo_producto": 123461,
+        "producto": "Monitor",
+        "precio": 250.0,
+        "cantidad_stock": 60,
+        "marca": "Dell",
+        "modelo": "UltraSharp"
+    },
+    "123462": {
+        "codigo_producto": 123462,
+        "producto": "Auriculares",
+        "precio": 100.0,
+        "cantidad_stock": 150,
+        "marca": "Bose",
+        "modelo": "QuietComfort 35"
+    },
+    "123463": {
+        "codigo_producto": 123463,
+        "producto": "Smartwatch",
+        "precio": 200.0,
+        "cantidad_stock": 80,
+        "marca": "Garmin",
+        "modelo": "Forerunner 945"
+    },
+    "123464": {
+        "codigo_producto": 123464,
+        "producto": "Camara",
+        "precio": 900.0,
+        "cantidad_stock": 25,
+        "marca": "Canon",
+        "modelo": "EOS Rebel T7"
+    },
+    "123465": {
+        "codigo_producto": 123465,
+        "producto": "Impresora",
+        "precio": 120.0,
+        "cantidad_stock": 90,
+        "marca": "Epson",
+        "modelo": "EcoTank L3150"
+    },
+    "123466": {
+        "codigo_producto": 123466,
+        "producto": "Fideos",
+        "precio": 1.5,
+        "cantidad_stock": 100,
+        "marca": "Don Vicente",
+        "peso": 500
+    },
+    "123467": {
+        "codigo_producto": 123467,
+        "producto": "Arroz",
+        "precio": 2.0,
+        "cantidad_stock": 200,
+        "marca": "Gallo",
+        "peso": 1000
+    },
+    "123468": {
+        "codigo_producto": 123468,
+        "producto": "Azucar",
+        "precio": 1.8,
+        "cantidad_stock": 150,
+        "marca": "Ledesma",
+        "peso": 1000
+    },
+    "123469": {
+        "codigo_producto": 123469,
+        "producto": "Yerba Mate",
+        "precio": 3.0,
+        "cantidad_stock": 120,
+        "marca": "Taragui",
+        "peso": 1000
+    },
+    "123470": {
+        "codigo_producto": 123470,
+        "producto": "Harina",
+        "precio": 1.2,
+        "cantidad_stock": 180,
+        "marca": "Morixe",
+        "peso": 1000
+    },
+    "123471": {
+        "codigo_producto": 123471,
+        "producto": "Leche en Polvo",
+        "precio": 4.0,
+        "cantidad_stock": 70,
+        "marca": "La Serenisima",
+        "peso": 800
+    },
+    "123472": {
+        "codigo_producto": 123472,
+        "producto": "Aceite",
+        "precio": 2.5,
+        "cantidad_stock": 110,
+        "marca": "Cocinero",
+        "peso": 900
+    },
+    "123473": {
+        "codigo_producto": 123473,
+        "producto": "Galletas",
+        "precio": 2.0,
+        "cantidad_stock": 130,
+        "marca": "Pepitos",
+        "peso": 300
+    },
+    "123474": {
+        "codigo_producto": 123474,
+        "producto": "Cafe",
+        "precio": 5.0,
+        "cantidad_stock": 85,
+        "marca": "La Virginia",
+        "peso": 500
+    },
+    "123475": {
+        "codigo_producto": 123475,
+        "producto": "Te",
+        "precio": 3.5,
+        "cantidad_stock": 95,
+        "marca": "Taragui",
+        "peso": 250
+    }
+}

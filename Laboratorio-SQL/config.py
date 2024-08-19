@@ -1,0 +1,5 @@
+DB_HOST=localhost
+DB_DATABASE=productos
+DB_USER=root
+DB_PASSWORD=Joselina1979
+DB_PORT=3306
